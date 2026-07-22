@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Olawale Excel — Web Developer & Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+:root {
+  --bg:      #060608;
+  --surface: #0e0e14;
+  --card:    #13131c;
+  --accent:  #00e5ff;
+  --accent2: #ff6b35;
+  --text:    #eeeef5;
+  --muted:   #7777a0;
+  --border:  rgba(255,255,255,0.07);
+  --glow:    rgba(0,229,255,0.15);
+}
+
+body {
+  background:var(--bg); color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:16px; line-height:1.65;
+  overflow-x:hidden;
+}
+
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--accent); border-radius:4px; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.2rem 7%;
+  background:rgba(6,6,8,0.92);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; color:var(--accent); }
+.logo span { color:var(--text); }
+.nav-links { display:flex; gap:2.2rem; list-style:none; }
+.nav-links a {
+  color:var(--muted); text-decoration:none; font-size:0.88rem;
+  font-weight:500; transition:color 0.3s;
+}
+.nav-links a:hover { color:var(--accent); }
+.nav-cta {
+  background:var(--accent); color:#000; padding:0.6rem 1.4rem;
+  border-radius:6px; text-decoration:none; font-weight:700;
+  font-size:0.85rem; transition:all 0.3s;
+}
+.nav-cta:hover { background:#fff; }
+
+/* HERO */
+.hero {
+  min-height:100vh; display:flex; align-items:center;
+  padding:9rem 7% 5rem; position:relative; overflow:hidden;
+}
+.hero-bg-grid {
+  position:absolute; inset:0; z-index:0;
+  background-image:
+    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+.orb {
+  position:absolute; border-radius:50%;
+  pointer-events:none; filter:blur(80px);
+}
+.orb1 { width:500px; height:500px; background:rgba(0,229,255,0.06); top:-100px; right:-80px; }
+.orb2 { width:350px; height:350px; background:rgba(255,107,53,0.05); bottom:50px; left:5%; }
+.hero-content { position:relative; z-index:1; max-width:780px; }
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  background:rgba(0,229,255,0.07); border:1px solid rgba(0,229,255,0.18);
+  color:var(--accent); padding:0.45rem 1.1rem; border-radius:100px;
+  font-size:0.8rem; font-weight:600; margin-bottom:1.8rem;
+  animation:fadeUp 0.6s ease both;
+}
+.live-dot {
+  width:7px; height:7px; background:var(--accent);
+  border-radius:50%; animation:livepulse 2s infinite;
+}
+@keyframes livepulse {
+  0%,100%{ box-shadow:0 0 0 0 rgba(0,229,255,0.5); }
+  50%{ box-shadow:0 0 0 6px rgba(0,229,255,0); }
+}
+.hero h1 {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(3.2rem,7.5vw,6rem);
+  line-height:1.02; letter-spacing:-0.04em;
+  animation:fadeUp 0.7s 0.1s ease both;
+}
+.hero h1 em { font-style:normal; color:var(--accent); }
+.hero h1 .line2 { color:var(--muted); font-weight:600; }
+.hero-desc {
+  font-size:1.1rem; color:var(--muted); font-weight:300;
+  max-width:480px; margin:1.8rem 0 2.8rem;
+  animation:fadeUp 0.7s 0.2s ease both;
+}
+.hero-actions {
+  display:flex; gap:1rem; flex-wrap:wrap;
+  animation:fadeUp 0.7s 0.3s ease both;
+}
+.btn-main {
+  background:var(--accent); color:#000; padding:0.9rem 2.2rem;
+  border-radius:8px; text-decoration:none; font-weight:700;
+  font-size:0.95rem; transition:all 0.3s;
+  display:inline-flex; align-items:center; gap:0.5rem;
+}
+.btn-main:hover { transform:translateY(-3px); box-shadow:0 10px 40px var(--glow); }
+.btn-ghost {
+  border:1px solid var(--border); color:var(--text);
+  padding:0.9rem 2.2rem; border-radius:8px;
+  text-decoration:none; font-weight:500; font-size:0.95rem; transition:all 0.3s;
+}
+.btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
+.hero-stats {
+  display:flex; gap:3rem; margin-top:4.5rem;
+  animation:fadeUp 0.7s 0.4s ease both;
+  padding-top:3rem; border-top:1px solid var(--border);
+}
+.stat-n {
+  font-family:'Syne',sans-serif; font-size:2.2rem;
+  font-weight:800; color:var(--accent); line-height:1;
+}
+.stat-l { font-size:0.78rem; color:var(--muted); margin-top:0.3rem; text-transform:uppercase; letter-spacing:0.08em; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* SECTIONS */
+section { padding:7rem 7%; }
+.s-tag { font-size:0.72rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin-bottom:0.8rem; }
+.s-title { font-family:'Syne',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:800; letter-spacing:-0.03em; line-height:1.1; margin-bottom:1rem; }
+.s-desc { color:var(--muted); max-width:480px; margin-bottom:3.5rem; line-height:1.75; }
+
+/* ABOUT */
+#about { background:var(--surface); }
+.about-wrap { display:grid; grid-template-columns:1fr 1.1fr; gap:5rem; align-items:center; }
+.about-card-main {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; padding:3rem 2.5rem; text-align:center;
+  position:relative; overflow:hidden;
+}
+.about-card-main::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+}
+.avatar { font-size:6rem; margin-bottom:1rem; }
+.about-name { font-family:'Syne',sans-serif; font-weight:800; font-size:1.5rem; }
+.about-role { color:var(--accent); font-size:0.85rem; font-weight:500; margin-top:0.3rem; }
+.about-location { color:var(--muted); font-size:0.82rem; margin-top:0.5rem; }
+.about-text p { color:var(--muted); margin-bottom:1.2rem; line-height:1.85; font-size:0.95rem; }
+.about-pills { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.5rem; }
+.pill {
+  background:rgba(0,229,255,0.07); border:1px solid rgba(0,229,255,0.15);
+  color:var(--text); padding:0.4rem 1rem; border-radius:100px; font-size:0.82rem;
+}
+
+/* SKILLS */
+.skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; }
+.skill-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:2rem; transition:all 0.35s; cursor:default;
+}
+.skill-card:hover { transform:translateY(-6px); border-color:rgba(0,229,255,0.25); }
+.sk-icon { font-size:2.2rem; margin-bottom:1.2rem; }
+.sk-name { font-family:'Syne',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:0.4rem; }
+.sk-desc { color:var(--muted); font-size:0.85rem; margin-bottom:1.2rem; line-height:1.6; }
+.sk-bar { background:rgba(255,255,255,0.06); border-radius:100px; height:4px; overflow:hidden; }
+.sk-bar-fill {
+  height:100%; border-radius:100px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width 1.2s ease;
+}
+.sk-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:1rem; }
+.sk-tag {
+  background:rgba(0,229,255,0.07); color:var(--accent);
+  padding:0.22rem 0.65rem; border-radius:100px; font-size:0.72rem;
+  border:1px solid rgba(0,229,255,0.12); font-weight:500;
+}
+
+/* PROJECTS */
+#projects { background:var(--surface); }
+.projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.8rem; }
+
+.proj-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:18px; overflow:hidden; transition:all 0.35s;
+  text-decoration:none; color:var(--text); display:block; cursor:pointer;
+}
+.proj-card:hover {
+  transform:translateY(-8px);
+  border-color:rgba(0,229,255,0.3);
+  box-shadow:0 24px 70px rgba(0,0,0,0.5);
+}
+.proj-card:hover .proj-arrow { transform:translate(3px,-3px); }
+.proj-thumb {
+  height:190px; display:flex; align-items:center;
+  justify-content:center; font-size:4.5rem; position:relative;
+}
+.proj-thumb-a { background:linear-gradient(135deg,#08082e,#101050); }
+.proj-thumb-b { background:linear-gradient(135deg,#081c10,#103020); }
+.proj-thumb-c { background:linear-gradient(135deg,#1c0808,#301010); }
+.proj-open-hint {
+  position:absolute; top:12px; right:14px;
+  background:rgba(0,229,255,0.15); border:1px solid rgba(0,229,255,0.25);
+  color:var(--accent); font-size:0.7rem; font-weight:700;
+  padding:0.25rem 0.7rem; border-radius:100px;
+}
+.proj-body { padding:1.6rem; }
+.proj-type { font-size:0.72rem; color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:0.5rem; }
+.proj-name {
+  font-family:'Syne',sans-serif; font-weight:800; font-size:1.15rem;
+  margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;
+}
+.proj-arrow { transition:transform 0.3s; }
+.proj-desc { color:var(--muted); font-size:0.87rem; line-height:1.65; margin-bottom:1.2rem; }
+
+/* CONTACT */
+.contact-wrap { max-width:640px; margin:0 auto; text-align:center; }
+.contact-box {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:24px; padding:4rem 3rem;
+  position:relative; overflow:hidden; margin-top:2rem;
+}
+.contact-box::before {
+  content:''; position:absolute; top:-1px; left:10%; right:10%; height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+}
+.contact-links { display:flex; flex-direction:column; gap:1rem; margin:2rem 0; }
+.contact-link {
+  display:flex; align-items:center; gap:1rem;
+  background:rgba(0,229,255,0.05); border:1px solid rgba(0,229,255,0.1);
+  padding:1rem 1.5rem; border-radius:12px;
+  text-decoration:none; color:var(--text); font-size:0.9rem; transition:all 0.3s;
+}
+.contact-link:hover { background:rgba(0,229,255,0.1); border-color:var(--accent); }
+.contact-link-icon { font-size:1.3rem; }
+.contact-link-label { color:var(--muted); font-size:0.75rem; }
+.contact-link-val { font-weight:600; }
+
+/* FOOTER */
+footer {
+  padding:2rem 7%; border-top:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+  color:var(--muted); font-size:0.82rem; flex-wrap:wrap; gap:1rem;
+}
+footer span { color:var(--accent); }
+
+/* RESPONSIVE */
+@media(max-width:900px) { .about-wrap { grid-template-columns:1fr; gap:3rem; } }
+@media(max-width:640px) {
+  nav .nav-links { display:none; }
+  .hero-stats { gap:1.5rem; }
+  section { padding:5rem 5%; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">OE<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="live-dot"></span>
+      Available for Remote Work Worldwide
+    </div>
+    <h1>
+      Hi, I'm<br/>
+      <em>Olawale</em><br/>
+      <span class="line2">Excel.</span>
+    </h1>
+    <p class="hero-desc">
+      Web & Web App Developer + Graphic Designer based in Lagos State, Nigeria.
+      I craft fast, beautiful, and functional digital experiences.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-main">View My Work →</a>
+      <a href="#contact" class="btn-ghost">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-n">3+</div>
+        <div class="stat-l">Projects Built</div>
+      </div>
+      <div>
+        <div class="stat-n">2</div>
+        <div class="stat-l">Core Disciplines</div>
+      </div>
+      <div>
+        <div class="stat-n">100%</div>
+        <div class="stat-l">Remote Ready</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-wrap">
+    <div>
+      <div class="about-card-main">
+        <div class="avatar">👨🏾‍💻</div>
+        <div class="about-name">Olawale Excel</div>
+        <div class="about-role">Web Developer & Graphic Designer</div>
+        <div class="about-location">📍 Lagos State, Nigeria</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="s-tag">About Me</div>
+      <h2 class="s-title">Passionate Developer & Creative Designer</h2>
+      <p>I'm a self-taught web developer and graphic designer from Lagos State, Nigeria. I combine clean, efficient code with strong visual design — so everything I build doesn't just work, it looks great too.</p>
+      <p>My journey began with curiosity about how websites work. Since then I've been building real projects, sharpening my skills daily, and working toward my goal of landing remote opportunities with global teams.</p>
+      <p>When I'm not coding, I'm designing — logos, brand visuals, UI mockups. Both skills make me a more complete developer.</p>
+      <div class="about-pills">
+        <span class="pill">HTML & CSS</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">Graphic Design</span>
+        <span class="pill">UI/UX</span>
+        <span class="pill">Responsive Design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="s-tag">What I Do</div>
+  <h2 class="s-title">My Skills</h2>
+  <p class="s-desc">A powerful combination of development and design — letting me build complete digital products from scratch.</p>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="sk-icon">🌐</div>
+      <div class="sk-name">Front-End Development</div>
+      <div class="sk-desc">Building pixel-perfect, responsive websites that look great on every screen and device.</div>
+      <div class="sk-bar"><div class="sk-bar-fill" style="width:85%"></div></div>
+      <div class="sk-tags"><span class="sk-tag">HTML5</span><span class="sk-tag">CSS3</span><span class="sk-tag">JavaScript</span><span class="sk-tag">Flexbox</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-icon">⚙️</div>
+      <div class="sk-name">Web App Development</div>
+      <div class="sk-desc">Creating interactive apps with real functionality — forms, dynamic data, user interfaces.</div>
+      <div class="sk-bar"><div class="sk-bar-fill" style="width:75%"></div></div>
+      <div class="sk-tags"><span class="sk-tag">JavaScript</span><span class="sk-tag">DOM</span><span class="sk-tag">APIs</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-icon">🎨</div>
+      <div class="sk-name">Graphic Design</div>
+      <div class="sk-desc">Designing logos, brand visuals, and UI that are professional and memorable.</div>
+      <div class="sk-bar"><div class="sk-bar-fill" style="width:80%"></div></div>
+      <div class="sk-tags"><span class="sk-tag">Figma</span><span class="sk-tag">Canva</span><span class="sk-tag">Branding</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="sk-icon">📱</div>
+      <div class="sk-name">Responsive Design</div>
+      <div class="sk-desc">Every project I build works perfectly on mobile, tablet, and desktop.</div>
+      <div class="sk-bar"><div class="sk-bar-fill" style="width:90%"></div></div>
+      <div class="sk-tags"><span class="sk-tag">Mobile-First</span><span class="sk-tag">Media Queries</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="s-tag">Portfolio</div>
+  <h2 class="s-title">My Projects</h2>
+  <p class="s-desc">Tap any project card to open it live.</p>
+  <div class="projects-grid">
+
+    <!-- PROJECT 1 -->
+    <a href="index.html" class="proj-card">
+      <div class="proj-thumb proj-thumb-a">
+        🌐
+        <span class="proj-open-hint">TAP TO OPEN</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-type">Portfolio Website</div>
+        <div class="proj-name">Personal Portfolio <span class="proj-arrow">↗</span></div>
+        <p class="proj-desc">A fully responsive portfolio showcasing my skills, projects and contact info. Built with pure HTML, CSS & JavaScript.</p>
+        <div class="sk-tags"><span class="sk-tag">HTML</span><span class="sk-tag">CSS</span><span class="sk-tag">JavaScript</span></div>
+      </div>
+    </a>
+
+    <!-- PROJECT 2 -->
+    <a href="restaurant.html" class="proj-card">
+      <div class="proj-thumb proj-thumb-b">
+        🍽️
+        <span class="proj-open-hint">TAP TO OPEN</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-type">Business Website</div>
+        <div class="proj-name">Bello's Kitchen <span class="proj-arrow">↗</span></div>
+        <p class="proj-desc">A stunning restaurant landing page with menu, reservation form, gallery and full mobile responsiveness.</p>
+        <div class="sk-tags"><span class="sk-tag">HTML</span><span class="sk-tag">CSS</span><span class="sk-tag">JavaScript</span></div>
+      </div>
+    </a>
+
+    <!-- PROJECT 3 -->
+    <a href="calculator.html" class="proj-card">
+      <div class="proj-thumb proj-thumb-c">
+        🧮
+        <span class="proj-open-hint">TAP TO OPEN</span>
+      </div>
+      <div class="proj-body">
+        <div class="proj-type">Web Application</div>
+        <div class="proj-name">Smart Calculator <span class="proj-arrow">↗</span></div>
+        <p class="proj-desc">A clean app-like calculator with keyboard support, history log, ripple effects and smooth animations.</p>
+        <div class="sk-tags"><span class="sk-tag">HTML</span><span class="sk-tag">CSS</span><span class="sk-tag">JavaScript</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="s-tag" style="text-align:center;">Let's Work Together</div>
+    <h2 class="s-title" style="text-align:center;">Get In Touch</h2>
+    <p class="s-desc" style="text-align:center; margin:0 auto 2rem;">
+      I'm open to remote freelance and full-time opportunities worldwide. Let's build something great!
+    </p>
+    <div class="contact-box">
+      <div class="contact-links">
+        <a href="tel:+2349134940124" class="contact-link">
+          <span class="contact-link-icon">💬</span></span>
+          <div>
+            <div class="contact-link-label">WhatsApp</div>
+            <div class="contact-link-val">+2349134940124</div>
+          </div>
+        </a>
+        <div class="contact-link">
+          <span class="contact-link-icon">📍</span>
+          <div>
+            <div class="contact-link-label">Location</div>
+            <div class="contact-link-val">Lagos State, Nigeria</div>
+          </div>
+        </div>
+        <div class="contact-link">
+          <span class="contact-link-icon">🌍</span>
+          <div>
+            <div class="contact-link-label">Availability</div>
+            <div class="contact-link-val">Remote — Worldwide</div>
+          </div>
+        </div>
+      </div>
+      <a href="tel:+2349134940124" class="btn-main">Call Me Now →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2026 <span>Olawale Excel</span>. All rights reserved.</div>
+  <div>Built with HTML, CSS & JavaScript</div>
+</footer>
+
+<script>
+// SMOOTH NAV
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+</script>
+
+</body>
+</html>
